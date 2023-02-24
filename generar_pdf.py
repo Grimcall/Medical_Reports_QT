@@ -1,4 +1,5 @@
 from reportlab.pdfgen.canvas import Canvas
+from reportlab.lib.utils import ImageReader
 from pdfrw import PdfReader
 from pdfrw.buildxobj import pagexobj
 from pdfrw.toreportlab import makerl
@@ -15,10 +16,10 @@ class GeneradorPDF:
         modelo = PdfReader("Modelo_Receta_Villegas_1.pdf", decompress = False).pages[0]
         modelo_obj = pagexobj(modelo)
 
-        # Select specific row.
+        #Select specific row
         row = self.df.iloc[row_n]
 
-        # Extract values from row + col
+        #Extract values from row[col]
         fecha = row['Timestamp']
         nombre = row['Nombre']
         apellidos =  row['Apellidos']
@@ -55,7 +56,30 @@ class GeneradorPDF:
         canvas.drawString(x_left, y_bottom, str(direccion))
 
         canvas.drawString(x_right, y_bottom, str(edad))
+
+        #TODO: Recipe section.
+        signature = ImageReader('firma.png')
+        signature_width, signature_height = signature.getSize()
+        canvas.drawImage(
+            signature, 
+            width = signature_width/1.3, 
+            height = signature_height/1.3, 
+            x = 310, 
+            y = 132, 
+            mask = "auto")
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ##END DATA WRITE
 
+
         canvas.save()
+
+
+data = {'Timestamp': ['2022-02-22 12:00:00', '2022-02-22 12:30:00'],
+        'Nombre': ['Juan', 'María'],
+        'Apellidos': ['Pérez', 'García'],
+        'RUT o N° Pasaporte': ['12345678-9', 'ABC123456'],
+        'Número de Teléfono': ['+56 9 12345678', '+56 9 87654321'],
+        'Edad': [30, 25]}
+
+dataframe = pd.DataFrame(data)
+pdf = GeneradorPDF(dataframe, 0)

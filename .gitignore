@@ -5,3 +5,6 @@ __pycache__/
 ui_angel.py
 test.py
 *.ui
+*.pdf
+*.png
+!Modelo_Receta_Villegas_1.pdf

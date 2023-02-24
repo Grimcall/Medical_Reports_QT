@@ -89,7 +89,7 @@ class MainWindow(QWidget):
         self.VLAYOUT_widget.addWidget(self.btn_generate)
 
         self.tabwidget.setCurrentIndex(0)
-
+        
         ##SIGNAL INSTANCING
         self.btn_browse_csv.clicked.connect(self.open_file)
         self.btn_generate.clicked.connect(self.select_item)
@@ -100,7 +100,6 @@ class MainWindow(QWidget):
             self, "Abrir archivo .CSV", "", "Archivos .csv (*.csv)"
         )
         
-        #TODO: Sort by TIMESTAMP from MOST RECENT (desc)
         if filename:
             self.df = pd.read_csv(filename)
             basename = os.path.basename(filename)
@@ -108,7 +107,9 @@ class MainWindow(QWidget):
             self.insert_csv_file.setStyleSheet("background-color: #dbdbdb; color: black;")
             msg = 'Archivo cargado exitosamente.'
             msgbox = Mensaje(msg)
-            print(self.df)
+
+            #Sorting by timestamp, from most recent (descending).
+            self.df = self.df.sort_values(by=['Timestamp'], ascending = False)
 
             for i, row in self.df.iterrows():
                 self.cbox_patients.addItem(row['Timestamp'] + ' ' + row['Nombre'] + ' ' + row['Apellidos'])

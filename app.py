@@ -46,7 +46,6 @@ class MainWindow(QWidget):
         self.btn_browse_csv = QPushButton(self.tab1)
         self.btn_browse_csv.setObjectName(u"btn_browse_csv")
         self.btn_browse_csv.setText("Buscar")
-        self.btn_browse_csv.clicked.connect(self.open_file)
 
         self.HLAYOUT_csv.addWidget(self.btn_browse_csv)
 
@@ -58,9 +57,6 @@ class MainWindow(QWidget):
         self.VLAYOUT_tab1.addWidget(self.txt_select)
 
         self.cbox_patients = QComboBox(self.tab1)
-        self.cbox_patients.addItem("Test1")
-        self.cbox_patients.addItem("Test2")
-        self.cbox_patients.addItem("Test3")
         self.cbox_patients.setObjectName(u"cbox_patients")
 
         self.VLAYOUT_tab1.addWidget(self.cbox_patients)
@@ -94,18 +90,35 @@ class MainWindow(QWidget):
 
         self.tabwidget.setCurrentIndex(0)
 
+        ##SIGNAL INSTANCING
+        self.btn_browse_csv.clicked.connect(self.open_file)
+        self.btn_generate.clicked.connect(self.select_item)
+
+
     def open_file(self):
         filename, _ = QFileDialog.getOpenFileName(
             self, "Abrir archivo .CSV", "", "Archivos .csv (*.csv)"
         )
+        
+        #TODO: Sort by TIMESTAMP from MOST RECENT (desc)
         if filename:
-            df = pd.read_csv(filename)
+            self.df = pd.read_csv(filename)
             basename = os.path.basename(filename)
             self.insert_csv_file.setText(basename)
             self.insert_csv_file.setStyleSheet("background-color: #dbdbdb; color: black;")
             msg = 'Archivo cargado exitosamente.'
             msgbox = Mensaje(msg)
-            print(df)
+            print(self.df)
+
+            for i, row in self.df.iterrows():
+                self.cbox_patients.addItem(row['Timestamp'] + ' ' + row['Nombre'] + ' ' + row['Apellidos'])
+
+    def select_item(self):
+        index = self.cbox_patients.currentIndex()
+        if index == -1:
+            return
+        else:
+            generar_pdf.GeneradorPDF(self.df, row_n = index)
 
     
             

@@ -59,6 +59,3 @@ class GeneradorPDF:
         ##END DATA WRITE
 
         canvas.save()
-
-df = pd.read_csv('Antecedentes Adulto.csv')
-pdf_gen = GeneradorPDF(df, 0)

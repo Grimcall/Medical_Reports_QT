@@ -2,6 +2,6 @@ bin/
 include/
 lib/
 __pycache__/
-*.pdf
 ui_angel.py
 test.py
+*.ui

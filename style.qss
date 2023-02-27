@@ -1,0 +1,74 @@
+/* Set the default font and color palette */
+* {
+    font-family: Arial;
+    font-size: 12px;
+    color: #333333;
+}
+
+/* Set the background color for the main window */
+MainWindow {
+    background-color: #f7f7f7;
+}
+
+/* Set the background color for the tab widget */
+QTabWidget {
+    background-color: #f7f7f7;
+}
+
+/* Set the background color and border radius for the tabs */
+QTabBar::tab {
+    background-color: #cccccc;
+    border: 1px solid #999999;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    min-width: 80px;
+    padding: 6px;
+    margin-right: 2px;
+}
+
+/* Set the background color and border radius for the selected tab */
+QTabBar::tab:selected {
+    background-color: #f2f2f2;
+    border-color: #666666;
+}
+
+/* Set the font color for the tabs */
+QTabBar::tab:!selected {
+    color: #666666;
+}
+
+/* Set the background color and border radius for the line edit */
+QLineEdit {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+
+/* Set the background color and border radius for the text edit */
+QTextEdit {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* Set the background color and border radius for the push button */
+QPushButton {
+    background-color: #cccccc;
+    border: 1px solid #999999;
+    border-radius: 4px;
+    padding: 6px;
+}
+
+/* Set the background color and border radius for the selected push button */
+QPushButton:hover {
+    background-color: #f2f2f2;
+    border-color: #666666;
+}
+
+/* Set the font color for the push button */
+QPushButton:!hover {
+    color: #ffffff;
+}

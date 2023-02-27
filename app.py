@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit,
     QPushButton, QTabWidget, QFileDialog,
     QTextEdit, QVBoxLayout, QHBoxLayout, QWidget, QMessageBox)
+from PySide6.QtCore import Qt
 import pandas as pd
 import os
 import generar_pdf
@@ -8,6 +9,9 @@ import generar_pdf
 class MainWindow(QWidget):
     def __init__(self) -> None:
         super().__init__()
+        
+        with open('style.qss', 'r') as f:
+            self.setStyleSheet(f.read())
         self.resize(371, 447)
 
         self.VLAYOUT_widget = QVBoxLayout(self)
@@ -86,6 +90,8 @@ class MainWindow(QWidget):
 
         #TODO: Send feedback message on pdf generated.
         
+
+        self.btn_generate.setCursor(Qt.PointingHandCursor)
         ##SIGNAL INSTANCING
         self.btn_browse_csv.clicked.connect(self.open_file)
         self.btn_generate.clicked.connect(self.select_item)
@@ -113,11 +119,12 @@ class MainWindow(QWidget):
     def select_item(self):
         index = self.cbox_patients.currentIndex()
         if index == -1:
+            Mensaje("Debe cargar un archivo y seleccionar un paciente para generar un reporte.", QMessageBox.Warning)
             return
         else:
             receta = self.tedit_receta.toPlainText()
             generar_pdf.GeneradorPDF(self.df, row_n = index, recetas = receta)
-            Mensaje("")
+            Mensaje("Reporte generado exitosamente.")
 
     
             

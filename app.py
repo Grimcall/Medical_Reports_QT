@@ -117,14 +117,15 @@ class MainWindow(QWidget):
         else:
             receta = self.tedit_receta.toPlainText()
             generar_pdf.GeneradorPDF(self.df, row_n = index, recetas = receta)
+            Mensaje("")
 
     
             
 class Mensaje(QMessageBox):
-    def __init__(self, message):
+    def __init__(self, message : str, icon : QMessageBox.Icon = QMessageBox.Information):
         super().__init__()
 
-        self.setIcon(QMessageBox.Information)
+        self.setIcon(icon)
         self.setText(message)
         self.setWindowTitle("Atención!")
         self.setStandardButtons(QMessageBox.Ok)

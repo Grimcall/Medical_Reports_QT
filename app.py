@@ -1,13 +1,8 @@
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit,
-    QPushButton, QSizePolicy, QSpacerItem, QTabWidget, QFileDialog,
+    QPushButton, QTabWidget, QFileDialog,
     QTextEdit, QVBoxLayout, QHBoxLayout, QWidget, QMessageBox)
-from PySide6.QtMultimedia import QSoundEffect
-from PySide6.QtCore import Qt
-
 import pandas as pd
-
 import os
-
 import generar_pdf
 
 class MainWindow(QWidget):
@@ -69,7 +64,6 @@ class MainWindow(QWidget):
 
         self.tedit_receta = QTextEdit(self.tab1)
         self.tedit_receta.setObjectName(u"tedit_receta")
-        self.tedit_receta.setText("1\n2\n3\n")
 
         self.VLAYOUT_tab1.addWidget(self.tedit_receta)
 
@@ -89,6 +83,8 @@ class MainWindow(QWidget):
         self.VLAYOUT_widget.addWidget(self.btn_generate)
 
         self.tabwidget.setCurrentIndex(0)
+
+        #TODO: Send feedback message on pdf generated.
         
         ##SIGNAL INSTANCING
         self.btn_browse_csv.clicked.connect(self.open_file)
@@ -119,7 +115,8 @@ class MainWindow(QWidget):
         if index == -1:
             return
         else:
-            generar_pdf.GeneradorPDF(self.df, row_n = index)
+            receta = self.tedit_receta.toPlainText()
+            generar_pdf.GeneradorPDF(self.df, row_n = index, recetas = receta)
 
     
             

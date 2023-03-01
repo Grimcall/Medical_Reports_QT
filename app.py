@@ -4,7 +4,11 @@ from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit,
 from PySide6.QtCore import Qt
 import pandas as pd
 import os
+from pdfrw import PdfReader
+from pdfrw.errors import PdfParseError
 import generar_pdf
+import messagebox as msg
+
 
 class MainWindow(QWidget):
     def __init__(self) -> None:
@@ -13,8 +17,8 @@ class MainWindow(QWidget):
         with open('style.qss', 'r') as f:
             self.setStyleSheet(f.read())
         self.resize(371, 447)
-
         self.setWindowTitle("Generador de Reportes Médicos")
+        self.open_model()
 
         self.VLAYOUT_widget = QVBoxLayout(self)
         self.VLAYOUT_widget.setObjectName(u"VLAYOUT_widget")
@@ -92,11 +96,27 @@ class MainWindow(QWidget):
 
         self.btn_generate.setCursor(Qt.PointingHandCursor)
         ##SIGNAL INSTANCING
-        self.btn_browse_csv.clicked.connect(self.open_file)
+        self.btn_browse_csv.clicked.connect(self.open_csv)
         self.btn_generate.clicked.connect(self.select_item)
 
-
-    def open_file(self):
+    #Read model .pdf, prompt the user to search a .pdf model if one is not found. 
+    def open_model(self):
+        try:
+            self.modelo = PdfReader("Modelo_Receta_Villegas.pdf", decompress=False).pages[0]
+        except PdfParseError:
+            msg.Mensaje("Debe primero abrir un modelo .pdf para utilizar la aplicación.", msg.QMessageBox.Critical)
+            filename, _ = QFileDialog.getOpenFileName(
+                self, "Abrir modelo .PDF", "", "Archivos .pdf (*.pdf)"
+            )
+            if filename:
+                try:
+                    self.modelo = PdfReader(filename, decompress=False).pages[0]
+                except PdfParseError:
+                    msg.Mensaje("El archivo seleccionado no es válido. Debe seleccionar un archivo PDF válido.", msg.QMessageBox.Critical)
+            else:
+                msg.Mensaje("Debe ubicar un archivo de modelo para utilizar la aplicación.", msg.QMessageBox.Critical)
+                self.destroy()
+    def open_csv(self):
         filename, _ = QFileDialog.getOpenFileName(
             self, "Abrir archivo .CSV", "", "Archivos .csv (*.csv)"
         )
@@ -106,36 +126,22 @@ class MainWindow(QWidget):
             basename = os.path.basename(filename)
             self.insert_csv_file.setText(basename)
             self.insert_csv_file.setStyleSheet("background-color: #dbdbdb; color: black;")
-            msg = 'Archivo cargado exitosamente.'
-            msgbox = Mensaje(msg)
+            msg.Mensaje('Archivo cargado exitosamente.')
 
             #Sorting by timestamp, from most recent (descending).
             self.df = self.df.sort_values(by=['Timestamp'], ascending = False)
 
             for i, row in self.df.iterrows():
                 self.cbox_patients.addItem(row['Timestamp'] + ' ' + row['Nombre'] + ' ' + row['Apellidos'])
-
     def select_item(self):
         index = self.cbox_patients.currentIndex()
         if index == -1:
-            Mensaje("Debe cargar un archivo y seleccionar un paciente para generar un reporte.", QMessageBox.Warning)
+            msg.Mensaje("Debe cargar un archivo y seleccionar un paciente para generar un reporte.", QMessageBox.Warning)
             return
         else:
             receta = self.tedit_receta.toPlainText()
-            generar_pdf.GeneradorPDF(self.df, row_n = index, recetas = receta)
-            Mensaje("Reporte generado exitosamente.")
-
-    
-            
-class Mensaje(QMessageBox):
-    def __init__(self, message : str, icon : QMessageBox.Icon = QMessageBox.Information):
-        super().__init__()
-
-        self.setIcon(icon)
-        self.setText(message)
-        self.setWindowTitle("Atención!")
-        self.setStandardButtons(QMessageBox.Ok)
-        self.exec()
+            generar_pdf.GeneradorPDF(self.df, row_n = index, modelo = self.modelo, recetas = receta)
+            msg.Mensaje("Reporte generado exitosamente.")
 
 app = QApplication()
 w = MainWindow()

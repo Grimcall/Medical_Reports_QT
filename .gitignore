@@ -9,4 +9,4 @@ test.py
 app.spec
 *.pdf
 *.png
-!Modelo_Receta_Villegas_1.pdf
+!Modelo_Receta_Villegas.pdf

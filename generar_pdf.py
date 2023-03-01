@@ -12,7 +12,7 @@ import pytz
 import pandas as pd
 
 class GeneradorPDF:
-    def __init__(self, df, row_n, recetas = None):
+    def __init__(self, df, row_n, modelo : PdfReader, recetas = None):
         self.df : pd.DataFrame = df
 
         #Getting font ready for later use.
@@ -21,12 +21,9 @@ class GeneradorPDF:
         style = styles["Normal"]
         style.fontName = "Garamond"
 
-        #Read model pdf.
-        try:
-            modelo = PdfReader("Modelo_Receta_Villegas.pdf", decompress = False).pages[0]
-            modelo_obj = pagexobj(modelo)
-        #pdfrw.errors.pdfparseerror
-        except 
+        #For testing purposes:
+        #modelo = PdfReader("Modelo_Receta_Villegas.pdf", decompress=False).pages[0]
+        modelo_obj = pagexobj(modelo)
 
         #Select specific row.
         row = self.df.iloc[row_n]
@@ -114,7 +111,7 @@ class GeneradorPDF:
         ##END DATA WRITE
 
         canvas.save()
-
+        
 
 #Dummy data for testing.
 """data = {'Timestamp': ['2022-02-22 12:00:00', '2022-02-22 12:30:00'],

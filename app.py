@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QLineEdit,
     QPushButton, QTabWidget, QFileDialog,
-    QTextEdit, QVBoxLayout, QHBoxLayout, QWidget, QMessageBox)
+    QTextEdit, QVBoxLayout, QHBoxLayout, QWidget, QMessageBox, QSpacerItem,
+    QSizePolicy)
 from PySide6.QtCore import Qt
 import pandas as pd
 import os
@@ -77,12 +78,23 @@ class MainWindow(QWidget):
 
         self.VLAYOUT_tab1.addWidget(self.tedit_receta)
 
-        self.tabwidget.addTab(self.tab1, "Tab 1")
+        self.tabwidget.addTab(self.tab1, "Generador")
         self.tab2 = QWidget()
         self.tab2.setObjectName(u"tab2")
+       
         self.VLAYOUT_tab2 = QVBoxLayout(self.tab2)
         self.VLAYOUT_tab2.setObjectName(u"VLAYOUT_tab2")
-        self.tabwidget.addTab(self.tab2, "Tab 2")
+       
+        self.txt_tab2 = QLabel(self.tab2)       
+        self.txt_tab2.setText(u"<html><head/><body><p>Esta aplicaci\u00f3n fue dise\u00f1ada por Diego 'Grimcall' Parra para \u00c1ngel Villegas el 2023-02-24.</p><p>Dicha aplicaci\u00f3n requiere \u00fanicamente de dos archivos:</p><p>*Un m\u00f3delo PDF para escribir los datos: 'Modelo_Angel_Villegas.pdf'</p><p>*Una imagen PNG transparente llamada: 'firma.png'.</p><p>*Un archivo .csv cuya ubicaci\u00f3n el usuario va a determinar.</p><p>Idealmente, todos los archivos deber\u00edan estar en el mismo diretorio que la aplicaci\u00f3n.</p><p>Sin embargo, tambi\u00e9n puede ser el caso que esto no sea as\u00ed. Para ello, al usuario se le presenta un di\u00e1logo para ubicar los archivos.</p></body></html>")
+        self.txt_tab2.setWordWrap(True)
+
+        self.VLAYOUT_tab2.addWidget(self.txt_tab2)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.VLAYOUT_tab2.addItem(self.verticalSpacer)
+
+        self.tabwidget.addTab(self.tab2, "Información")
 
         self.VLAYOUT_widget.addWidget(self.tabwidget)
 

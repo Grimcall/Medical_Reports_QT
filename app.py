@@ -14,6 +14,8 @@ class MainWindow(QWidget):
             self.setStyleSheet(f.read())
         self.resize(371, 447)
 
+        self.setWindowTitle("Generador de Reportes Médicos")
+
         self.VLAYOUT_widget = QVBoxLayout(self)
         self.VLAYOUT_widget.setObjectName(u"VLAYOUT_widget")
 
@@ -86,10 +88,7 @@ class MainWindow(QWidget):
 
         self.VLAYOUT_widget.addWidget(self.btn_generate)
 
-        self.tabwidget.setCurrentIndex(0)
-
-        #TODO: Send feedback message on pdf generated.
-        
+        self.tabwidget.setCurrentIndex(0)        
 
         self.btn_generate.setCursor(Qt.PointingHandCursor)
         ##SIGNAL INSTANCING

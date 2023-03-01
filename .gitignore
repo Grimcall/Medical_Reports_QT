@@ -2,9 +2,11 @@ bin/
 include/
 lib/
 __pycache__/
+build/
+dist/
 ui_angel.py
 test.py
-*.ui
+app.spec
 *.pdf
 *.png
 !Modelo_Receta_Villegas_1.pdf

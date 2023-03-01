@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>352</width>
+    <height>403</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta aplicación fue diseñada por Diego 'Grimcall' Parra para Ángel Villegas el 2023-02-24.&lt;/p&gt;&lt;p&gt;Dicha aplicación requiere únicamente de dos archivos:&lt;/p&gt;&lt;p&gt;*Un módelo PDF para escribir los datos: 'Modelo_Angel_Villegas_1.pdf'&lt;/p&gt;&lt;p&gt;*Una imagen PNG transparente llamada: 'firma.png'.&lt;/p&gt;&lt;p&gt;*Un archivo .csv cuya ubicación el usuario va a determinar.&lt;/p&gt;&lt;p&gt;Idealmente, todos los archivos deberían estar en el mismo diretorio que la aplicación.&lt;/p&gt;&lt;p&gt;Sin embargo, también puede ser el caso que esto no sea así. Para ello, al usuario se le presenta un diálogo para ubicar los archivos.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

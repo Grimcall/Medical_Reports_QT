@@ -22,8 +22,11 @@ class GeneradorPDF:
         style.fontName = "Garamond"
 
         #Read model pdf.
-        modelo = PdfReader("Modelo_Receta_Villegas_1.pdf", decompress = False).pages[0]
-        modelo_obj = pagexobj(modelo)
+        try:
+            modelo = PdfReader("Modelo_Receta_Villegas.pdf", decompress = False).pages[0]
+            modelo_obj = pagexobj(modelo)
+        #pdfrw.errors.pdfparseerror
+        except 
 
         #Select specific row.
         row = self.df.iloc[row_n]
